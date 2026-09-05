@@ -10,9 +10,11 @@ include:
 # Variable declarations. These variables are assigned in the dev/prod targets below.
 variables:
   catalog:
-    description: The catalog to use
+    description: Medallion data catalog
   schema:
-    description: The schema to use
+    description: Medallon data schema
+  raw_json_path: 
+    description: Raw JSON landing path
 
 targets:
   dev:
@@ -25,8 +27,9 @@ targets:
     workspace:
       host: https://adb-7405608811042444.4.azuredatabricks.net
     variables:
-      catalog: dbr_telemetry_dev
+      catalog: dbrtelemetrydev
       schema: ${workspace.current_user.short_name}
+      raw_json_path: /Volumes/dbrtelemetrydev/raw/telemetry_json/incoming
   prod:
     mode: production
     workspace:
@@ -34,8 +37,9 @@ targets:
       # We explicitly deploy to /Workspace/Users/solgas80@gmail.com to make sure we only have a single copy.
       root_path: /Workspace/Users/solgas80@gmail.com/.bundle/${bundle.name}/${bundle.target}
     variables:
-      catalog: dbr_telemetry_prod
+      catalog: dbrtelemetryprod
       schema: prod
+      raw_json_path: /Volumes/dbrtelemetryprod/raw/telemetry_json/incoming
     permissions:
       - user_name: solgas80@gmail.com
         level: CAN_MANAGE

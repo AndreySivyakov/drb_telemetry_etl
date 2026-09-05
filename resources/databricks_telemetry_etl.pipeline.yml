@@ -12,6 +12,9 @@ resources:
       libraries:
         - glob:
             include: ../src/databricks_telemetry_etl/transformations/**
+      
+      configuration:
+        telemetry.raw_json_path: ${var.raw_json_path}
 
       environment:
         dependencies:
