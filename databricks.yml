@@ -54,8 +54,3 @@ targets:
       silver_schema: silver
       gold_schema: gold
       raw_json_path: /Volumes/dtbrtelemetryprod/raw/telemetry_json/incoming
-    permissions:
-      - user_name: solgas80@gmail.com
-        level: CAN_MANAGE
-      - service_principal_name: 00466b1a-37d9-4439-b1e4-7e5185c07e49
-        level: CAN_MANAGE
