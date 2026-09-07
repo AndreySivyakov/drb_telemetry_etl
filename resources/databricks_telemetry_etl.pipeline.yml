@@ -14,8 +14,8 @@ resources:
             include: ../src/databricks_telemetry_etl/transformations/**
       
       configuration:
-       telemetry.catalog: ${var.catalog}
-       telemetry.bronze_schema: ${var.bronze_schema}
-       telemetry.silver_schema: ${var.silver_schema}
-       telemetry.gold_schema: ${var.gold_schema}
-       telemetry.raw_json_path: ${var.raw_json_path}
+        telemetry.catalog: ${var.catalog}
+        telemetry.bronze_schema: ${var.bronze_schema}
+        telemetry.silver_schema: ${var.silver_schema}
+        telemetry.gold_schema: ${var.gold_schema}
+        telemetry.raw_json_path: ${var.raw_json_path}

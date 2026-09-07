@@ -45,8 +45,8 @@ targets:
       branch: main
     workspace:
       host: https://adb-7405609764554064.4.azuredatabricks.net
-      # We explicitly deploy to /Workspace/Users/solgas80@gmail.com to make sure we only have a single copy.
-      root_path: /Workspace/Users/solgas80@gmail.com/.bundle/${bundle.name}/${bundle.target}
+      # CI deploys with a service principal, so keep bundle state outside a user's workspace folder.
+      root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
     variables:
       catalog: dtbrtelemetryprod
       schema: prod
@@ -56,4 +56,6 @@ targets:
       raw_json_path: /Volumes/dtbrtelemetryprod/raw/telemetry_json/incoming
     permissions:
       - user_name: solgas80@gmail.com
+        level: CAN_MANAGE
+      - service_principal_name: 00466b1a-37d9-4439-b1e4-7e5185c07e49
         level: CAN_MANAGE
