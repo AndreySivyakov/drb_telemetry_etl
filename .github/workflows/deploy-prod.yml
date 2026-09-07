@@ -30,15 +30,15 @@ jobs:
       - name: Validate production bundle
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_AUTH_TYPE: oauth-m2m
-          DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
-          DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
+          ARM_TENANT_ID: 6c33f963-1c91-4137-a5cb-2f24ef2298a7
+          ARM_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
         run: databricks bundle validate --target prod
 
       - name: Deploy production bundle
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_AUTH_TYPE: oauth-m2m
-          DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
-          DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
+          ARM_TENANT_ID: 6c33f963-1c91-4137-a5cb-2f24ef2298a7
+          ARM_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
         run: databricks bundle deploy --target prod --auto-approve
