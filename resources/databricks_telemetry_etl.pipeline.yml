@@ -7,14 +7,15 @@ resources:
       catalog: ${var.catalog}
       schema: ${var.schema}
       serverless: true
-      root_path: "../src/databricks_telemetry_etl"
+      root_path: "../src/databricks_telemetry_etl/transformations"
 
       libraries:
         - glob:
             include: ../src/databricks_telemetry_etl/transformations/**
-
-      environment:
-        dependencies:
-          # We include every dependency defined by pyproject.toml by defining an editable environment
-          # that points to the folder where pyproject.toml is deployed.
-          - --editable ${workspace.file_path}
+      
+      configuration:
+       telemetry.catalog: ${var.catalog}
+       telemetry.bronze_schema: ${var.bronze_schema}
+       telemetry.silver_schema: ${var.silver_schema}
+       telemetry.gold_schema: ${var.gold_schema}
+       telemetry.raw_json_path: ${var.raw_json_path}
