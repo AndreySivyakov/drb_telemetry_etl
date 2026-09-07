@@ -3,15 +3,17 @@ from pyspark.sql import DataFrame
 from pyspark.sql.functions import col, concat_ws, lit, sha2, to_date
 
 
+# Gold dimensional model: shared dimensions plus separate EU and RoW facts.
 def dimension_key(column_name: str):
+    # Deterministic keys let facts and dimensions use the same business-key value.
     return sha2(concat_ws("|", col(column_name).cast("string")), 256)
 
 
 def all_clean_events() -> DataFrame:
+    # Dimensions are shared, so they are built from both regional Silver tables.
     return dp.read("silver_eu_telemetry_events").unionByName(
         dp.read("silver_row_telemetry_events")
     )
-
 
 @dp.materialized_view(name="dim_application", comment="Telemetry application dimension")
 def dim_application():
@@ -61,6 +63,7 @@ def dim_date():
 
 
 def telemetry_fact(events: DataFrame, region_group: str) -> DataFrame:
+    # Each regional fact retains its event-level grain and dimension keys.
     return events.select(
         col("eventId").alias("event_id"),
         col("userId").alias("user_id"),
