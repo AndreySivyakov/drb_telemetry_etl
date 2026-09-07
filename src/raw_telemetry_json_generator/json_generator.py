@@ -43,7 +43,6 @@ for i in range(num_events):
     event = {
         "eventId": str(uuid.uuid4()),
         "userId": random.randint(1, 100),
-        "time": datetime.now().strftime("%Y-%m-%d"),
         "event_time": random_timestamp_yesterday().strftime("%Y-%m-%dT%H:%M:%S"),
         "actionId": f"{app_name}_{action_id}",
         "appName": app_name,
