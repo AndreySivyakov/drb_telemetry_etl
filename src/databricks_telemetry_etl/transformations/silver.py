@@ -18,16 +18,20 @@ def cleanse_events(events: DataFrame) -> DataFrame:
         .filter(year("event_time") > 1900)
     )
 
-@dp.table(name=silver_eu_table,
-    comment="Silver table for EU telemetry events",):
-def silver_eu_table():
+@dp.table(
+    name=silver_eu_table,
+    comment="Silver table for EU telemetry events",
+)
+def silver_eu_telemetry_events():
     bronze = dp.read_stream(bronze_table)
     eu_events = bronze.filter(col("geoArea") == "Europe")
     return cleanse_events(eu_events)
 
-@dp.table(name=silver_row_table,
-    comment="Silver table for RoW telemetry events",):
-def silver_row_table():
+@dp.table(
+    name=silver_row_table,
+    comment="Silver table for RoW telemetry events",
+)
+def silver_row_telemetry_events():
     bronze = dp.read_stream(bronze_table)
     row_events = bronze.filter(col("geoArea") != "Europe")
     return cleanse_events(row_events)
