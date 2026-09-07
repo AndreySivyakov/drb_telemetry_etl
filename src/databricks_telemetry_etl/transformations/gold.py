@@ -1,6 +1,6 @@
 from pyspark import pipelines as dp
 from pyspark.sql import DataFrame
-from pyspark.sql.functions import col, concat_ws, lit, sha2, to_date
+from pyspark.sql.functions import col, concat_ws, count, count_distinct, lit, sha2, to_date
 
 
 # Gold dimensional model: shared dimensions plus separate EU and RoW facts.
@@ -63,11 +63,9 @@ def dim_date():
 
 
 def telemetry_fact(events: DataFrame, region_group: str) -> DataFrame:
-    # Each regional fact retains its event-level grain and dimension keys.
-    return events.select(
-        col("eventId").alias("event_id"),
+    # One row per day and dimension combination, with actions and distinct users as measures.
+    keyed_events = events.select(
         col("userId").alias("user_id"),
-        col("event_time"),
         to_date("event_time").cast("string").alias("date_key"),
         dimension_key("appName").alias("application_key"),
         dimension_key("deviceType").alias("device_key"),
@@ -77,10 +75,25 @@ def telemetry_fact(events: DataFrame, region_group: str) -> DataFrame:
         lit(region_group).alias("region_group"),
     )
 
+    fact_dimensions = [
+        "date_key",
+        "application_key",
+        "device_key",
+        "geography_key",
+        "operating_system_key",
+        "action_key",
+        "region_group",
+    ]
+
+    return keyed_events.groupBy(*fact_dimensions).agg(
+        count(lit(1)).alias("action_count"),
+        count_distinct("user_id").alias("user_count"),
+    )
+
 
 @dp.materialized_view(
     name="fact_eu_telemetry_events",
-    comment="Clean telemetry events for Europe",
+    comment="Daily telemetry action and distinct-user counts for Europe",
 )
 def fact_eu_telemetry_events():
     return telemetry_fact(dp.read("silver_eu_telemetry_events"), "EU")
@@ -88,7 +101,7 @@ def fact_eu_telemetry_events():
 
 @dp.materialized_view(
     name="fact_row_telemetry_events",
-    comment="Clean telemetry events for rest-of-world regions",
+    comment="Daily telemetry action and distinct-user counts for rest-of-world regions",
 )
 def fact_row_telemetry_events():
     return telemetry_fact(dp.read("silver_row_telemetry_events"), "RoW")
