@@ -2,10 +2,12 @@ from pyspark import pipelines as dp
 from pyspark.sql.functions import col, current_timestamp
 
 raw_json_path = spark.conf.get("telemetry.raw_json_path")
-
+catalog = spark.conf.get("telemetry.catalog")
+bronze_schema = spark.conf.get("telemetry.bronze_schema")
+bronze_table = f"{catalog}.{bronze_schema}.bronze_telemetry_events"
 
 @dp.table(
-    name="bronze_telemetry_events",
+    name=bronze_table,
     comment="Raw telemetry events ingested incrementally from JSON landing files",
 )
 def bronze_telemetry_events():

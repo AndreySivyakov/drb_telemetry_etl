@@ -12,7 +12,13 @@ variables:
   catalog:
     description: Medallion data catalog
   schema:
-    description: Medallon data schema
+    description: Default pipeline schema
+  bronze_schema:
+    description: Bronze layer schema
+  silver_schema:
+    description: Silver layer schema
+  gold_schema:
+    description: Gold layer schema
   raw_json_path: 
     description: Raw JSON landing path
 
@@ -29,6 +35,9 @@ targets:
     variables:
       catalog: dtbrtelemetrydev
       schema: ${workspace.current_user.short_name}
+      bronze_schema: ${workspace.current_user.short_name}
+      silver_schema: ${workspace.current_user.short_name}
+      gold_schema: ${workspace.current_user.short_name}
       raw_json_path: /Volumes/dtbrtelemetrydev/raw/telemetry_json/incoming
   prod:
     mode: production
@@ -39,6 +48,9 @@ targets:
     variables:
       catalog: dtbrtelemetryprod
       schema: prod
+      bronze_schema: bronze
+      silver_schema: silver
+      gold_schema: gold
       raw_json_path: /Volumes/dtbrtelemetryprod/raw/telemetry_json/incoming
     permissions:
       - user_name: solgas80@gmail.com
