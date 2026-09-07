@@ -41,6 +41,8 @@ targets:
       raw_json_path: /Volumes/dtbrtelemetrydev/raw/telemetry_json/incoming
   prod:
     mode: production
+    git:
+      branch: main
     workspace:
       host: https://adb-7405609764554064.4.azuredatabricks.net
       # We explicitly deploy to /Workspace/Users/solgas80@gmail.com to make sure we only have a single copy.
