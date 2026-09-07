@@ -45,8 +45,8 @@ targets:
       branch: main
     workspace:
       host: https://adb-7405609764554064.4.azuredatabricks.net
-      # CI deploys with a service principal, so keep bundle state outside a user's workspace folder.
-      root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
+      # Keep the existing production bundle state and pipeline identity stable.
+      root_path: /Workspace/Users/solgas80@gmail.com/.bundle/${bundle.name}/${bundle.target}
     variables:
       catalog: dtbrtelemetryprod
       schema: prod
