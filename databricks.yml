@@ -29,7 +29,7 @@ targets:
     variables:
       catalog: dtbrtelemetrydev
       schema: ${workspace.current_user.short_name}
-      raw_json_path: /Volumes/dbrtelemetrydev/raw/telemetry_json/incoming
+      raw_json_path: /Volumes/dtbrtelemetrydev/raw/telemetry_json/incoming
   prod:
     mode: production
     workspace:
@@ -39,7 +39,7 @@ targets:
     variables:
       catalog: dtbrtelemetryprod
       schema: prod
-      raw_json_path: /Volumes/dbrtelemetryprod/raw/telemetry_json/incoming
+      raw_json_path: /Volumes/dtbrtelemetryprod/raw/telemetry_json/incoming
     permissions:
       - user_name: solgas80@gmail.com
         level: CAN_MANAGE
