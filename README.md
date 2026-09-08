@@ -5,9 +5,9 @@ databricks.yml                         # Bundle targets and environment variable
 resources/                              # Databricks pipeline definitions
 src/databricks_telemetry_etl/
     transformations/
-        bronze.py                           # Incremental raw JSON ingestion
-        silver.py                           # Regional split and cleansing
-        gold.py                             # Dimensions and aggregated regional facts
+        bronze.py                          # Incremental raw JSON ingestion
+        silver.py                          # Regional split and cleansing
+        gold.py                            # Dimensions and aggregated regional facts
 src/raw_telemetry_json_generator/
     json_generator.py                     # Manual telemetry landing-data simulator
 pyproject.toml                          # Python project and development dependencies
